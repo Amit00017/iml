@@ -1,0 +1,35 @@
+import numpy as np
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt
+
+# Generate synthetic data
+np.random.seed(42)
+X1 = np.random.normal(loc=0, scale=1, size=(100, 2))
+X2 = np.random.normal(loc=5, scale=1, size=(100, 2))
+X = np.concatenate([X1, X2])
+
+# Visualize the data
+plt.scatter(X[:, 0], X[:, 1], alpha=0.6)
+plt.title("Synthetic Data")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.show()
+
+# Initialize KMeans with K=2
+kmeans = KMeans(n_clusters=2, random_state=42)
+
+# Fit the model to the data
+kmeans.fit(X)
+
+# Extract cluster centers and labels
+centers = kmeans.cluster_centers_
+labels = kmeans.labels_
+
+# Visualize the clusters
+plt.scatter(X[:, 0], X[:, 1], c=labels, cmap='viridis', alpha=0.6)
+plt.scatter(centers[:, 0], centers[:, 1], c='red', marker='x', s=100, label='Cluster Centers')
+plt.title("K-Means Clustering")
+plt.xlabel("Feature 1")
+plt.ylabel("Feature 2")
+plt.legend()
+plt.show()
