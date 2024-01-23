@@ -1,0 +1,23 @@
+from mlxtend.frequent_patterns import apriori
+from mlxtend.preprocessing import TransactionEncoder
+import pandas as pd
+
+# Example transaction data
+transactions = [
+    ['bread', 'milk', 'eggs'],
+    ['bread', 'butter', 'cheese'],
+    ['milk', 'butter', 'bread', 'cheese'],
+    ['eggs', 'bread', 'milk'],
+    ['butter', 'milk', 'bread']
+]
+
+# Convert the transaction data to a one-hot encoded DataFrame
+te = TransactionEncoder()
+te_ary = te.fit(transactions).transform(transactions)
+df = pd.DataFrame(te_ary, columns=te.columns_)
+
+# Apply Apriori algorithm
+frequent_itemsets = apriori(df, min_support=0.4, use_colnames=True)
+
+# Display the frequent itemsets
+print("Frequent Itemsets:\n", frequent_itemsets)
